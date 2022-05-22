@@ -19,26 +19,27 @@
 class Member
 {
 public:
-	Member() : points(0) {}
-	Member(std::string firstName, std::string lastName) :
+	Member() : memberId(0), points(0) {}
+	Member(const std::string& firstName, const std::string& lastName) :
 		firstName(firstName), lastName(lastName),
 		memberId(0), points(0) {}
 	
-	//Accessor functions
-	std::string getLastName();
+	void addPoints(int newPoints);
+	void setID(int newId);
+
+	std::string getLastName() const;
 	int getID() const;
 	int getPoints() const;
 	
-	//funtions 
-	void addPoints(int);
-	void setID(int);
+	bool operator<(const Member& aMember) const;
+
 	void printMember() const;
 
+	~Member() {};
 private:
 	int memberId; // member's ID
-	int points; // member's points
 	std::string firstName; //first name of member
 	std::string lastName; //last name of member
+	int points; // member's points
 };
-#endif // !MEMBER_H
-
+#endif

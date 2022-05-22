@@ -12,6 +12,7 @@
 */
 
 #include <iostream>
+#include <algorithm>
 #include <iomanip>
 #include <map>
 #include "Hikelist.h"

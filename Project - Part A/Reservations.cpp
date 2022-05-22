@@ -16,6 +16,8 @@
 #include <iomanip>
 #include "Reservations.h"
 
+const int RESERVATION_NUMBER = 50001;
+
 int Reservations::addReservation(int memberId, std::string& hikeName)
 {
 	if (size == 0) {
@@ -23,7 +25,8 @@ int Reservations::addReservation(int memberId, std::string& hikeName)
 		last = first;
 		size++;
 	}
-	else {
+	else 
+	{
 		last->setNext(new Node(RESERVATION_NUMBER + size, memberId,
 			hikeName, last, nullptr));
 		last = last->getNext();
@@ -32,24 +35,40 @@ int Reservations::addReservation(int memberId, std::string& hikeName)
 	return last->getReservationNumber();
 }
 
- void Reservations::cancelReservation(int reservNum) 
+void Reservations::cancelReservation(int reservNum)
 {
-	 if (size == 0) 
-	 {
-		 delete first;
-		 first = nullptr;
-		 last = nullptr;
-		 size--;
+	if (size == 1)
+	{
+		delete first;
+		first = nullptr;
+		last = nullptr;
 	}
-	 else 
-	 {
-		 auto canceledRes = findReservation(reservNum);
-		 canceledRes->getPrev()->setNext(canceledRes->getNext());
-		 canceledRes->getNext()->setPrev(canceledRes->getPrev());
-		 delete canceledRes;
-		 canceledRes = nullptr;
-		 size--;
-	 }
+	else
+	{
+		auto canceledRes = findReservation(reservNum);
+		if (canceledRes == first)
+		{
+			first = first->getNext();
+			first->getPrev()->setNext(nullptr);
+			delete canceledRes;
+			canceledRes = nullptr;
+		}	
+		else if	(canceledRes != last)
+		{
+			canceledRes->getPrev()->setNext(canceledRes->getNext());
+			canceledRes->getNext()->setPrev(canceledRes->getPrev());
+			delete canceledRes;
+			canceledRes = nullptr;
+		}
+		else 
+		{
+			last = last->getPrev();
+			last->setNext(nullptr);
+			delete canceledRes;
+			canceledRes = nullptr;
+		}
+	}
+	size--;
 }
 
 void Reservations::printReservation(int reservNum, HikeList& listOfHikes,
@@ -62,7 +81,6 @@ void Reservations::printReservation(int reservNum, HikeList& listOfHikes,
 	double hikePrice = listOfHikes.getPrice(iterRes->getHikeName());
 	cout <<  "\n" << "\t" << "Discounted price using points : " << fixed 
 		<< setprecision(2) << (hikePrice - (membPoints / 100));
-
 }
 
 void Reservations::clearList()
@@ -81,16 +99,11 @@ void Reservations::clearList()
 Node* Reservations::findReservation(int reservNum)
 {
 	auto iter = first;
-	auto reservIter = ++last;
-	while (iter != last) 
+	while (iter->getReservationNumber() != reservNum)
 	{
-		if (iter->getReservationNumber() == reservNum) 
-		{
-			reservIter = iter;
-		}
-		iter++;
+		iter = iter->getNext();
 	}
-	return reservIter;
+	return iter;
 }
 
 Reservations::~Reservations() {

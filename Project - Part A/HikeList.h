@@ -14,10 +14,11 @@
 #ifndef HikeList_H
 #define HikeList_H
 
-#include <iostream>
-#include <map>
-#include <algorithm>
 #include "Hike.h"
+
+#include <map>
+#include <string>
+
 
 class HikeList 
 {

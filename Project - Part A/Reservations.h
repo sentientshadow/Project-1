@@ -18,13 +18,12 @@
 #include "MemberList.h"
 #include "HikeList.h"
 
-const int RESERVATION_NUMBER = 50001;
 
 class Node 
 {
 public:
 	//Constructors
-	Node() : reservationNumber(0), memberID(0), prev(nullptr), next(nullptr){}
+	Node() : reservationNumber(0), memberID(0), prev(nullptr), next(nullptr) {}
 
 	Node(int newReservation, int newMember, std::string& newHike, 
 		Node* prevLink, Node* nextLink) :
@@ -37,7 +36,7 @@ public:
 
 	int getMemberID() const { return memberID; }
 
-	std::string getHikeName() { return hikeName; }
+	std::string getHikeName() const { return hikeName; }
 
 	Node* getPrev() const { return prev; }
 
@@ -45,7 +44,8 @@ public:
 
 	//Mutator Functions
 
-	void setReservationNumber(int newReservNum) { reservationNumber = newReservNum; }
+	void setReservationNumber(int newReservNum) 
+	{ reservationNumber = newReservNum; }
 
 	void setMemberID(int newMember) { memberID = newMember; }
 	

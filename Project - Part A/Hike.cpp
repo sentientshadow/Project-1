@@ -11,23 +11,20 @@
 	Project: Hiking in the US
 */
 
-#include "Hike.h"
-#include <string>
-#include <iostream>
+#include "Interface.h"
 
+using namespace std;
 
-
-std::ostream& operator<<(std::ostream& out, const Hike& obj)
+ostream& operator<<(ostream& out, const Hike& hikeObj)
 {
-	// output
-	out << "\t" << obj.hike << " (" << obj.location << ")" << "\n\t  Difficulty: ";
-
-	// convert char obj.difficulty to string
-	if (obj.difficulty == 'e')
+	out << "\t" << hikeObj.hike 
+		<< " (" << hikeObj.location << ")" 
+		<< "\n\t  Difficulty: ";
+	if (hikeObj.difficulty == 'e')
 	{
 		out << "easy";
 	}
-	else if (obj.difficulty == 'm')
+	else if (hikeObj.difficulty == 'm')
 	{
 		out << "moderate";
 	}
@@ -35,19 +32,17 @@ std::ostream& operator<<(std::ostream& out, const Hike& obj)
 	{
 		out << "strenuous";
 	}
-
-	// finish output
-	out << "\n\t  Duration: " << obj.duration << " day(s)" << std::endl;
+	out << "\n\t  Duration: " 
+		<< hikeObj.duration << " day(s)" << endl;
 	return out;
 }
-
 	
-std::string Hike::getLocation() const
+string Hike::getLocation() const
 {
 	return location;
 }
 
-std::string Hike::getHike() const
+string Hike::getHike() const
 {
 	return hike;
 }
@@ -62,3 +57,7 @@ char Hike::getDifficulty() const
 	return difficulty;
 }
 
+bool Hike::operator<(const Hike& userHike) const
+{
+	return userHike.location > this->location;
+}

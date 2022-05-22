@@ -22,7 +22,7 @@ using namespace std;
 
 const string RESERVATION_FILE = "reservations_database.txt";
 
-void createHikeList(ifstream& infile, Reservations& reservationList)
+void createReservationList(ifstream& infile, Reservations& reservationList)
 {
 	int memberId = 0;
 	string newHike;
@@ -34,7 +34,7 @@ void createHikeList(ifstream& infile, Reservations& reservationList)
 	}
 }
 
-void getHikeData(Reservations& reservationList)
+void getReservationData(Reservations& reservationList)
 {
 	ifstream infile;
 
@@ -46,7 +46,9 @@ void getHikeData(Reservations& reservationList)
 		exit(1); // terminates program
 	}
 
-	createHikeList(infile, reservationList);
+	createReservationList(infile, reservationList);
 
 	infile.close();
 }
+
+

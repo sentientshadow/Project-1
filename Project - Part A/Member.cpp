@@ -11,14 +11,26 @@
 	Project: Hiking in the US
 */
 
-#include "Member.h"
-#include <string>
+#include "Interface.h"
+
+#include <iomanip>
 #include <iostream>
+
 using namespace std;
 
-void Member::setID(int id)
+void Member::addPoints(int newPoints)
 {
-	memberId = id;
+	points += newPoints;
+}
+
+void Member::setID(int newId)
+{
+	memberId = newId;
+}
+
+string Member::getLastName() const
+{
+	return lastName;
 }
 
 int Member::getID() const
@@ -26,19 +38,14 @@ int Member::getID() const
 	return memberId;
 }
 
-void Member::addPoints(int point)
-{
-	points += point;
-}
-
 int Member::getPoints() const
 {
 	return points;
 }
 
-string Member::getLastName()
+bool Member::operator<(const Member& aMember) const
 {
-	return lastName;
+	return aMember.memberId > this->memberId;
 }
 
 void Member::printMember() const
