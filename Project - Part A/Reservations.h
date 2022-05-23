@@ -76,14 +76,14 @@ public:
 	void cancelReservation(int reservNum);
 
 	void printReservation(int reservNum, HikeList& listOfHikes,
-		MemberList& listOfMembers);
+		MemberList& listOfMembers) const;
 
 	void clearList();
 
 	~Reservations();
 private:
 
-	Node* findReservation(int reservNum);
+	Node* findReservation(int reservNum) const;
 	
 	Node* first;
 	Node* last;

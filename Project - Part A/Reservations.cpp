@@ -20,7 +20,8 @@ const int RESERVATION_NUMBER = 50001;
 
 int Reservations::addReservation(int memberId, std::string& hikeName)
 {
-	if (size == 0) {
+	if (size == 0) 
+	{
 		first = new Node(RESERVATION_NUMBER, memberId, hikeName, nullptr, last);
 		last = first;
 		size++;
@@ -72,15 +73,21 @@ void Reservations::cancelReservation(int reservNum)
 }
 
 void Reservations::printReservation(int reservNum, HikeList& listOfHikes,
-	MemberList& listOfMembers)
+	MemberList& listOfMembers) const
 {
 	auto iterRes = findReservation(reservNum);
-	listOfHikes.printByHikeName(iterRes->getHikeName());
-
-	int membPoints = listOfMembers.getPoints(iterRes->getMemberID());
-	double hikePrice = listOfHikes.getPrice(iterRes->getHikeName());
-	cout <<  "\n" << "\t" << "Discounted price using points : " << fixed 
-		<< setprecision(2) << (hikePrice - (membPoints / 100));
+	if (iterRes != nullptr)
+	{
+		listOfHikes.printByHikeName(iterRes->getHikeName());
+		int membPoints = listOfMembers.getPoints(iterRes->getMemberID());
+		double hikePrice = listOfHikes.getPrice(iterRes->getHikeName());
+		std::cout <<  "\n" << "\t" << "Discounted price using points : " << std::fixed 
+			<< std::setprecision(2) << (hikePrice - (membPoints / 100));
+	}
+	else
+	{
+		std::cerr << "\nThis reservation does not exist.\n";
+	}
 }
 
 void Reservations::clearList()
@@ -96,11 +103,15 @@ void Reservations::clearList()
 	last = nullptr;
 }
 
-Node* Reservations::findReservation(int reservNum)
+Node* Reservations::findReservation(int reservNum) const
 {
 	auto iter = first;
-	while (iter->getReservationNumber() != reservNum)
+	while (iter != nullptr)
 	{
+		if (iter->getReservationNumber() == reservNum)
+		{
+			return iter;
+		}
 		iter = iter->getNext();
 	}
 	return iter;

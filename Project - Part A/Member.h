@@ -37,9 +37,9 @@ public:
 
 	~Member() {};
 private:
-	int memberId; // member's ID
-	std::string firstName; //first name of member
-	std::string lastName; //last name of member
-	int points; // member's points
+	int memberId; 
+	std::string firstName; 
+	std::string lastName; 
+	int points; 
 };
 #endif

@@ -11,9 +11,12 @@
 	Project: Hiking in the US
 */
 
+#include "Interface.h"
 
-#include "MemberList.h"
-#include "Member.h"
+#include "iostream"
+#include "algorithm"
+
+using namespace std;
 
 MemberList::MemberList()
 {
@@ -23,44 +26,49 @@ MemberList::MemberList()
 void MemberList::addMember(const string& firstName, const string& lastName)
 {
 	Member* memberInserted = new Member(firstName, lastName);
-
 	if (listOfMember.size() == 0)
 	{
 		memberInserted->setID(STARTING_ID);
 	}
 	else
 	{
-		memberInserted->setID(STARTING_ID + listOfMember.size());
+		memberInserted->setID(STARTING_ID + (int)listOfMember.size());
 	}
 	listOfMember.insert(memberInserted);
 }
 
-
-void MemberList::addMember(const string& firstName, const string& lastName, const int points)
+void MemberList::addMember(const string& firstName, const string& lastName,int points)
 {
 	Member* memberInserted = new Member(firstName, lastName);
 	memberInserted->addPoints(points);
-
 	if (listOfMember.size() == 0)
 	{
 		memberInserted->setID(STARTING_ID);
 	}
 	else
 	{
-		memberInserted->setID(listOfMember.size() + STARTING_ID);
+		memberInserted->setID(STARTING_ID + (int)listOfMember.size());
 	}
 	listOfMember.insert(memberInserted);
 }
 
 int MemberList::getLastID() const
 {
-	auto iterLastID = listOfMember.end();
-	iterLastID--;
-	return (*iterLastID)->getID();
+	return (*listOfMember.rbegin())->getID();
 }
 
+int MemberList::getPoints(int myID) const
+{
+	set<Member*>::iterator iterSearchID = listOfMember.begin();
+	set<Member*>::iterator iterEnd = listOfMember.end();
+	auto seachPoints = find_if(iterSearchID, iterEnd, [=](Member* m)
+		{
+			return (m->getID() == myID);
+		});
+	return (*seachPoints)->getPoints();
+}
 
-void MemberList::printMember(const int myID, const string& myLastName) const
+void MemberList::printMember(int myID, const string& myLastName) const
 {
 	set<Member*>::iterator it = listOfMember.begin();
 	set<Member*>::iterator itEnd = listOfMember.end();
@@ -73,17 +81,6 @@ void MemberList::printMember(const int myID, const string& myLastName) const
 		(*searchID)->printMember();
 		cout << "\tMembership # " << (*searchID)->getID() << endl;
 	}
-}
-
-int MemberList::getPoints(const int myID) const
-{
-	set<Member*>::iterator iterSearchID = listOfMember.begin();
-	set<Member*>::iterator iterEnd = listOfMember.end();
-	auto seachPoints = find_if(iterSearchID, iterEnd, [=](Member* m)
-		{
-			return (m->getID() == myID);
-		});
-	return (*seachPoints)->getPoints();
 }
 
 void MemberList::clearList()

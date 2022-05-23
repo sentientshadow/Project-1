@@ -112,7 +112,7 @@ void HikeList::printByDuration(int duration) const
 		iterHike++;
 	}
 	for_each(tempMap.begin(), tempMap.end(), [](pair<int, Hike> hike)
-		{cout << "\t" << hike.second << endl; });
+		{cout << hike.second << endl; });
 }
 
 //Prints all hikes with the requested difficulty

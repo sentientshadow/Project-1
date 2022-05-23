@@ -11,39 +11,32 @@
     Project: Hiking in the US
 */
 
-
 #ifndef MEMBERLIST_H
 #define MEMBERLIST_H
 
-#include <string>
-#include <iostream>
-#include <set>
 #include "Member.h"
 
-using namespace std;
+#include <string>
+#include <set>
 
 const int STARTING_ID = 111;
 
 class MemberList
 {
-
 public:
     MemberList();
 
-    void addMember(const string&, const string&);
-    void addMember(const string&, const string&, const int);
-    int getLastID() const;
+    void addMember(const std::string&, const std::string&);
+    void addMember(const std::string&, const std::string&,int);
 
-    int getPoints(const int) const;
-    void printMember(int, const string&) const;
+    int getLastID() const;
+    int getPoints(int) const;
+
+    void printMember(const int, const std::string&) const;
 
     void clearList();
-
-
     ~MemberList();
-
 private:
-
-    set<Member*> listOfMember;
+    std::set<Member*> listOfMember; //set of member
 };
 #endif
